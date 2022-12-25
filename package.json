@@ -1,6 +1,6 @@
 {
   "type": "module",
-  "name": "common-storage-drivers",
+  "name": "common-store",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
