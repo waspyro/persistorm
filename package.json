@@ -1,5 +1,5 @@
 {
-  "type": "module",
+  "type": "commonjs",
   "name": "common-store",
   "version": "1.0.0",
   "description": "",
@@ -12,5 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "mkdirp": "github:waspyro/node-mkdirp"
+  },
+  "devDependencies": {
+    "ioredis": "^5.3.1"
   }
 }
