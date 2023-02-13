@@ -8,11 +8,12 @@ export default class StoreRedis {
 
     constructor(
         readonly client: Redis,
-        route: string[] = ['_persist'],
+        route: [string, ...string[]] = ['_persist'],
         readonly sep: string = ':',
         private encode = JSON.stringify,
         private decode = JSON.parse
     ) {
+        if(!sep.length) throw new Error('sep cannot be empty string')
         this.path = route.filter(el => el).join(sep)
         this.arrayDecoder = ArrayDecoder(this.decode)
         this.objectDecoder = ObjectDecoder(this.decode)
@@ -23,28 +24,26 @@ export default class StoreRedis {
         this.sep, this.encode, this.decode
     )
 
-    set = (...args: (string|string[])[]) => {
-        if(typeof args[0] === 'string')
-            return this.client.hset(this.path, args[0], this.encode(args[1]))
-        if(Array.isArray(args[0]))
-            args[0] = Object.entries(args[0]).flat()
-        for(let i = 1; i < args[0].length; i += 2)
-            args[0][i] = this.encode(args[0][i])
-        return this.client.hmset(this.path, ...args)
-    }
+    set = (key, value) =>
+        this.client.hset(this.path, key, this.encode(value))
+    seto = (...args: { [key: string]: any }[]) =>
+        this.setm(...args.map(Object.entries).flat())
+    setm = (...args: any[]) =>
+        this.client.hmset(this.path, ...args.flat()
+        .map((e, i) => i % 2 ? this.encode(e) : e)) //encode all the values
 
-    get = (...args: string[]) => {
-        if(!args.length) return this.client
-            .hgetall(this.path).then(this.objectDecoder)
-        if(typeof args[0] === 'string') return this.client
-            .hget(this.path, args[0]).then(this.decode)
-        return this.client
-            .hmget(this.path, args[0]).then(this.arrayDecoder)
-    }
+    get = (key: string) =>
+        this.client.hget(this.path, key).then(this.decode)
+    geta = () =>
+        this.client.hgetall(this.path).then(this.objectDecoder)
+    getm = (...args: [string, ...string[]] | [[string, ...string[]]]) =>
+        this.client.hmget(this.path, ...args.flat()).then(this.arrayDecoder)
 
-    del = (...args: string[]) => {
-        if(!args.length) return this.client.del(this.path)
-        return this.client.hdel(this.path, ...args.flat())
-    }
+    del = (key) =>
+        this.client.del(this.path, key)
+    dela = () =>
+        this.client.del(this.path)
+    delm = (...args) =>
+        this.client.hdel(this.path, ...args)
 
 }
