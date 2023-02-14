@@ -18,6 +18,7 @@ export default class StoreFS {
     ) {
         if(typeof route === 'string') route = [route]
         this.path = Path.join(root, ...route)
+        this.route = route
     }
 
     col = (...args: string[]) => new StoreFS(
