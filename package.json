@@ -2,11 +2,10 @@
   "type": "commonjs",
   "files": ["dist"],
   "types": "dist/index.d.ts",
-
   "name": "presisitorm",
   "version": "2.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "prepare": "rm -rf dist && tsc --outDir dist",
     "test": "echo \"Error: no test specified\" && exit 1"
