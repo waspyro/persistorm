@@ -1,10 +1,14 @@
 {
   "type": "commonjs",
-  "name": "common-store",
-  "version": "1.0.0",
+  "files": ["dist"],
+  "types": "dist/index.d.ts",
+
+  "name": "presisitorm",
+  "version": "2.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "prepare": "rm -rf dist && tsc --outDir dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

@@ -26,23 +26,31 @@ export default class StoreRedis {
 
     set = (key, value) =>
         this.client.hset(this.path, key, this.encode(value))
-    seto = (...args: { [key: string]: any }[]) =>
-        this.setm(...args.map(Object.entries).flat())
-    setm = (...args: any[]) =>
-        this.client.hmset(this.path, ...args.flat()
-        .map((e, i) => i % 2 ? this.encode(e) : e)) //encode all the values
+
+    seto = (object: { [key: string]: any }) =>
+        this.setm(Object.entries(object))
+
+    setm = (args: [k: string, v: any][]) =>
+        this.client.hmset(this.path, args
+            .map((e, i) => i % 2 ? this.encode(e) : e))
+
 
     get = (key: string) =>
         this.client.hget(this.path, key).then(this.decode)
+
     geta = () =>
         this.client.hgetall(this.path).then(this.objectDecoder)
-    getm = (...args: [string, ...string[]] | [[string, ...string[]]]) =>
-        this.client.hmget(this.path, ...args.flat()).then(this.arrayDecoder)
+
+    getm = (keys: string[]) =>
+        this.client.hmget(this.path, ...keys).then(this.arrayDecoder)
+
 
     del = (key) =>
         this.client.del(this.path, key)
+
     dela = () =>
         this.client.del(this.path)
+
     delm = (...args) =>
         this.client.hdel(this.path, ...args)
 

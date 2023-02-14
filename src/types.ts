@@ -1,12 +1,3 @@
-interface Presistored {
-    col: (...args: string[]) => Presistored
-    // set: <T> () => {}
-    // get: () => {}
-    // fill: () => {}
-    // del: () => {}
+interface Presistorable {
+    //todo
 }
-
-// interface PresistoredRedis {
-    // constructor: (client: ) => this
-    // col: (...args: string[]) => PresistoredRedis
-// }
