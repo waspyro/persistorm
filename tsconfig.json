@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "declaration": true,
+    "declarationMap": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": false,
+    "skipLibCheck": false,
+    "strictNullChecks": true,
+    //    "strictBindCallApply": true,
+    //    "strictFunctionTypes": true,
+    //    "strictPropertyInitialization": true,
+    //    "anduseUnknownInCatchVariables": true
+  },
+  "include": ["src/**/*"]
+}
+
