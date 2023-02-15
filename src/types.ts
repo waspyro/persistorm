@@ -1,3 +1,3 @@
-interface Presistorable {
+interface Persitormable {
     //todo
 }

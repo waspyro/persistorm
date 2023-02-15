@@ -101,8 +101,8 @@ export default class StoreFS {
     delm = (keys: string[]) => this.#deleteFiles(keys.map(el => el + this.ext))
 
     static home = os.homedir()
-    static root = '/'
-    static tmp = os.tmpdir()
-    static default = Path.join(...[StoreFS.home, '.local', 'state', 'presistore']) //dono for win
-    static presistore = process.env.PRESISTORE_DIR || StoreFS.default
+    static tmp = Path.join(os.tmpdir(), 'persistorm')
+    static local = Path.join(StoreFS.home, '.local', 'state', 'persistorm') //dono for win
+    static env = process.env.PERSISTORM_DIR
+    static default = StoreFS.env || StoreFS.tmp
 }
