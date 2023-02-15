@@ -1,7 +1,7 @@
 import os from 'os'
 import Path from 'path'
 import fs from 'fs/promises'
-import mkdirp from 'mkdirp'
+import {mkdirp} from 'mkdirp'
 
 export default class StoreFS {
 
@@ -28,11 +28,20 @@ export default class StoreFS {
 
     #genFullPath = (key, ext = '') => Path.join(this.path, key) + ext
 
+    #onDirCreated: ((err)=>void)[] = []
+    #createDir = () => new Promise<void>((resolve, reject) => {
+        if(this.#onDirCreated.push((err) => err ? reject(err) : resolve()) !== 1) return;
+        mkdirp(this.path, (err) => {
+            for(const l of this.#onDirCreated) l(err)
+            this.#onDirCreated.length = 0
+        })
+    })
+
     #write = (filename, encodedValue) => fs.writeFile(filename, encodedValue)
         .then(() => 1)
         .catch((e) => {
             if(e.code !== 'ENOENT') throw e
-            return mkdirp(this.path)
+            return this.#createDir()
                 .then(() => this.#write(filename, encodedValue))
         })
 
