@@ -1,5 +1,6 @@
-export const ObjectDecoder = decoder => O => {
-    for(const key in O) O[key] = decoder(O[key])
+export const ObjectDecoder = decoder => assignTo => O => {
+    if(!assignTo) assignTo = O
+    for(const key in O) assignTo[key] = decoder(O[key])
     return O
 }
 

@@ -2,6 +2,7 @@ import os from 'os'
 import Path from 'path'
 import fs from 'fs/promises'
 import {mkdirp} from 'mkdirp'
+import {write} from "fs";
 
 export default class StoreFS {
 
@@ -73,13 +74,16 @@ export default class StoreFS {
 
     get = (key: string) => this.#readFile(this.#genFullPath(key, this.ext))
 
-    geta = () => this.#getFilesInPath()
-        .then(filenames => Promise.all(filenames
-            .map(async filename => [
-                Path.parse(filename).name,
-                await this.#readFile(this.#genFullPath(filename))
-            ]))
-            .then(Object.fromEntries))
+    geta = async (assignTo = {}) => {
+        try {
+            const filenames = await this.#getFilesInPath()
+            await Promise.all(filenames.map(filename =>
+                this.#readFile(this.#genFullPath(filename))
+                    .then(data => assignTo[Path.parse(filename).name] = data)))
+        } finally {
+            return assignTo
+        }
+    }
 
     getm = (keys: string[]) => Promise.all(keys.map(this.get))
 
