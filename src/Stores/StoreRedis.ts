@@ -38,7 +38,7 @@ export default class StoreRedis {
     get = (key: string) =>
         this.client.hget(this.path, key).then(this.decode)
 
-    geta = (assignTo) =>
+    geta = (assignTo: undefined | {[key: string]: any}) =>
         this.client.hgetall(this.path).then(this.objectDecoder(assignTo))
 
     getm = (keys: string[]) =>
