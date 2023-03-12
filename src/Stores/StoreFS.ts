@@ -2,7 +2,7 @@ import os from 'os'
 import Path from 'path'
 import fs from 'fs/promises'
 import {mkdirp} from 'mkdirp'
-import {write} from "fs";
+import {countTruthy} from "../utils";
 
 export default class StoreFS {
 
@@ -14,8 +14,8 @@ export default class StoreFS {
         root = StoreFS.tmp,
         route: string | string[] = [],
         readonly ext = '.json',
-        private encode = JSON.stringify,
-        private decode = JSON.parse
+        private encode: (valueToEncode: any) => string = JSON.stringify,
+        private decode: (valueToDecode: string) => any = JSON.parse
     ) {
         if(typeof route === 'string') route = [route]
         this.path = Path.join(root, ...route)
@@ -46,7 +46,7 @@ export default class StoreFS {
                 .then(() => this.#write(filename, encodedValue))
         })
 
-    set = (key: string, value: any) =>
+    set = (key: string, value: any): Promise<1> => //todo: Parameters<typeof this.encode>[0]
         this.#write(this.#genFullPath(key, this.ext), this.encode(value))
 
     seto = (object: { [key: string]: any }) =>
@@ -108,10 +108,10 @@ export default class StoreFS {
         if(files.length) promises.push(this.#deleteFiles(files))
         if(dirs.length) promises.push(this.#deleteEmptyDirs(dirs))
         if(promises.length) return Promise.all(promises).then(() => 1)
-        return 1
+        return Number(!!promises.length)
     })
 
-    delm = (keys: string[]) => this.#deleteFiles(keys.map(el => el + this.ext))
+    delm = (keys: string[]) => this.#deleteFiles(keys.map(el => el + this.ext)).then(countTruthy)
 
     static home = os.homedir()
     static tmp = Path.join(os.tmpdir(), 'persistorm')

@@ -24,7 +24,7 @@ export default class StoreRedis {
         this.sep, this.encode, this.decode
     )
 
-    set = (key, value) =>
+    set = (key: string, value: any): Promise<number> =>
         this.client.hset(this.path, key, this.encode(value))
 
     seto = (object: { [key: string]: any }) =>
