@@ -11,10 +11,6 @@
     "strict": false,
     "skipLibCheck": false,
     "strictNullChecks": true,
-    //    "strictBindCallApply": true,
-    //    "strictFunctionTypes": true,
-    //    "strictPropertyInitialization": true,
-    //    "anduseUnknownInCatchVariables": true
   },
   "include": ["src/**/*"]
 }
