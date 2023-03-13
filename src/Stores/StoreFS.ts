@@ -18,6 +18,7 @@ export default class StoreFS {
         private decode: (valueToDecode: string) => any = JSON.parse
     ) {
         if(typeof route === 'string') route = [route]
+        this.root = root
         this.path = Path.join(root, ...route)
         this.route = route
     }
@@ -85,7 +86,8 @@ export default class StoreFS {
         }
     }
 
-    getm = (keys: string[]) => Promise.all(keys.map(this.get))
+    getm = (keys: string[]):  Promise<(any | null)[]> =>
+        Promise.all(keys.map(this.get))
 
     #deleteFile = fullFilePath =>
         fs.unlink(fullFilePath)
