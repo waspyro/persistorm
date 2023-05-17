@@ -78,7 +78,7 @@ export default class StoreMongo {
 
     del = (key: string) => {
         return this.client.updateOne(this.docFilter, {
-            $unset: {[[...this.route, key].join('.')]: 1}
+            $unset: {[this.getRouteString(key)]: 1}
         }).then(r => r.modifiedCount)
     }
 
@@ -95,7 +95,7 @@ export default class StoreMongo {
 
     delm = (keys: string[]) => {
         const $unset = {}
-        for(const a of keys) $unset[[...this.route, a].join('.')] = 1
+        for(const a of keys) $unset[this.getRouteString(a)] = 1
         return this.client.updateOne(this.docFilter, {$unset})
     }
 
