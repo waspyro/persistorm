@@ -27,13 +27,12 @@ export default class StoreRedis {
     set = (key: string, value: any): Promise<number> =>
         this.client.hset(this.path, key, this.encode(value))
 
-    seto = (object: { [key: string]: any }) =>
-        this.setm(Object.entries(object))
-
     setm = (args: [k: string, v: any][]) =>
         this.client.hmset(this.path, args
             .map((e, i) => i % 2 ? this.encode(e) : e))
 
+    seto = (object: { [key: string]: any }) =>
+        this.setm(Object.entries(object))
 
     get = (key: string) =>
         this.client.hget(this.path, key).then(this.decode)
@@ -50,7 +49,7 @@ export default class StoreRedis {
     dela = () =>
         this.client.del(this.path)
 
-    delm = (...args) =>
-        this.client.hdel(this.path, ...args)
+    delm = (keys: string[]) =>
+        this.client.hdel(this.path, ...keys)
 
 }
