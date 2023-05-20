@@ -65,7 +65,7 @@ export default class StoreMongo {
         for(const k in res) { //i don't know what to do with nested objects
             res[k] = this.decode(res[k])
         }
-        return res
+        return res || {}
     }
 
     //nobrainer
