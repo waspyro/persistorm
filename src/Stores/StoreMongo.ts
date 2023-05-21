@@ -43,7 +43,7 @@ export default class StoreMongo {
     setm = (args: [k: string, v: any][]) => this.seto(Object.fromEntries(args))
 
     get = async (key: string) => {
-        let res = this.client.findOne(this.docFilter, {projection: this.commonProjection})
+        let res = await this.client.findOne(this.docFilter, {projection: this.commonProjection})
         for(const p of [...this.route, key]) {
             if(!res) break
             if(typeof res !== 'object') throw new Error('bad value')
