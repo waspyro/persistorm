@@ -34,9 +34,11 @@ export default class StoreMongo {
     }
 
     seto = (object: { [key: string]: any }) => {
-        for(const el of Object.keys(object)) object[el] = this.encode(object[el])
+        const fullObjectKeys = {}
+        for(const key in object)
+            fullObjectKeys[this.getRouteString(key)] = this.encode(object[key])
         return this.client.findOneAndUpdate(this.docFilter, {
-            $set: this.routeString ? {[this.routeString]: object} : object
+            $set: fullObjectKeys
         }, {upsert: true}).then(r => r.ok)
     }
 
@@ -98,5 +100,8 @@ export default class StoreMongo {
         for(const a of keys) $unset[this.getRouteString(a)] = 1
         return this.client.updateOne(this.docFilter, {$unset})
     }
+
+    itk() {}
+    itkv() {}
 
 }
