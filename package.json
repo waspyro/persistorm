@@ -16,8 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "mkdirp": "github:waspyro/node-mkdirp",
-    "persistorm": "github:waspyro/persistorm"
+    "mkdirp": "github:waspyro/node-mkdirp"
   },
   "devDependencies": {
     "@types/node": "^18.13.0",
