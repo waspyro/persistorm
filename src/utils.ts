@@ -14,11 +14,11 @@ export const countTruthy = (arr: any[]) => {
     return truthy
 }
 
-export const commonGetSet = async function (
+export const commonGetSet = async function<T extends any>(
   this: PersistormInstance, key: string,
-  setter: (key: string, ctx: typeof this) => any,
+  setter: (key: string, ctx: typeof this) => T,
   setCondition = v => !v
-) {
+): Promise<T> {
     let value = await this.get(key)
     if(setCondition(value)) {
         value = await setter(key, this)
