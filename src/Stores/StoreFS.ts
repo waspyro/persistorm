@@ -2,7 +2,7 @@ import os from 'os'
 import Path from 'path'
 import fs from 'fs/promises'
 import {mkdirp} from 'mkdirp'
-import {countTruthy} from "../utils";
+import {commonGetSet, countTruthy} from "../utils";
 
 export default class StoreFS {
 
@@ -114,6 +114,8 @@ export default class StoreFS {
     })
 
     delm = (keys: string[]) => this.#deleteFiles(keys.map(el => el + this.ext)).then(countTruthy)
+
+    getset: typeof commonGetSet = commonGetSet.bind(this)
 
     static home = os.homedir()
     static tmp = Path.join(os.tmpdir(), 'persistorm')

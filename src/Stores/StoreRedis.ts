@@ -1,5 +1,5 @@
 import Redis from "ioredis";
-import {ArrayDecoder, ObjectDecoder} from "../utils";
+import {ArrayDecoder, commonGetSet, ObjectDecoder} from "../utils";
 
 export default class StoreRedis {
     readonly path: string
@@ -51,5 +51,7 @@ export default class StoreRedis {
 
     delm = (keys: string[]) =>
         this.client.hdel(this.path, ...keys)
+
+    getset: typeof commonGetSet = commonGetSet.bind(this)
 
 }

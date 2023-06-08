@@ -1,4 +1,5 @@
 import {Collection} from "mongodb";
+import {commonGetSet} from "../utils";
 
 //experimental
 export default class StoreMongo {
@@ -100,6 +101,8 @@ export default class StoreMongo {
         for(const a of keys) $unset[this.getRouteString(a)] = 1
         return this.client.updateOne(this.docFilter, {$unset})
     }
+
+    getset: typeof commonGetSet = commonGetSet.bind(this)
 
     itk() {}
     itkv() {}
