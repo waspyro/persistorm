@@ -1,7 +1,7 @@
 import os from 'os'
 import Path from 'path'
 import fs from 'fs/promises'
-import {mkdirp} from 'mkdirp'
+import {mkdirp} from '@waspyro/mkdirp'
 import {commonGetSet, countTruthy} from "../utils";
 
 export default class StoreFS {

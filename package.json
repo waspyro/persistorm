@@ -16,7 +16,7 @@
   "author": "waspyro",
   "license": "ISC",
   "dependencies": {
-    "mkdirp": "github:waspyro/node-mkdirp"
+    "@waspyro/mkdirp": "^1.2.1"
   },
   "devDependencies": {
     "@types/node": "^18.16.16",
