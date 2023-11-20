@@ -2,4 +2,6 @@
 .fleet
 node_modules
 dist
-test
+testpackage-lock.json
+pnpm-lock.json
+bun.lockb
