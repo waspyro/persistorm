@@ -31,7 +31,7 @@ export default class StoreMongo {
     set = (key: string, value: any): Promise<number> => {
         return this.client.findOneAndUpdate(this.docFilter, {
             $set: {[this.getRouteString(key)]: this.encode(value)}
-        }, {upsert: true}).then(r => r.ok)
+        }, {upsert: true}).then(r => r && r.ok)
     }
 
     seto = (object: { [key: string]: any }) => {
@@ -40,7 +40,7 @@ export default class StoreMongo {
             fullObjectKeys[this.getRouteString(key)] = this.encode(object[key])
         return this.client.findOneAndUpdate(this.docFilter, {
             $set: fullObjectKeys
-        }, {upsert: true}).then(r => r.ok)
+        }, {upsert: true}).then(r => r && r.ok)
     }
 
     setm = (args: [k: string, v: any][]) => this.seto(Object.fromEntries(args))
@@ -88,7 +88,7 @@ export default class StoreMongo {
     dela = () => {
         if(!this.routeString) { //we're in root – delete doc
             return this.client.findOneAndDelete(this.docFilter)
-                .then(r => r.ok)
+                .then(r => r && r.ok)
         } else {
             return this.client.updateOne(this.docFilter, {
                 $unset: {[this.routeString]: 1}
