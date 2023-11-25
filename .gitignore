@@ -5,3 +5,4 @@ dist
 testpackage-lock.json
 pnpm-lock.json
 bun.lockb
+test
