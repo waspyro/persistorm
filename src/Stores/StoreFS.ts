@@ -119,7 +119,6 @@ export default class StoreFS {
 
     static home = os.homedir()
     static tmp = Path.join(os.tmpdir(), 'persistorm')
-    static local = Path.join(StoreFS.home, '.local', 'state', 'persistorm') //dono for win
-    static env = process.env.PERSISTORM_DIR
-    static default = StoreFS.env || StoreFS.tmp
+    static xdgcache = Path.join(StoreFS.home, 'cache', 'persistorm')
+    static xdgstate = Path.join(StoreFS.home, '.local', 'state', 'persistorm') //dono for win
 }
