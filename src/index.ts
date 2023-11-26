@@ -1,11 +1,12 @@
 import StoreFS from './Stores/StoreFS'
 import StoreRedis from "./Stores/StoreRedis";
 import StoreMongo from "./Stores/StoreMongo";
-import {getStoreFromEnv} from "./env";
+import {getStoreFromConfig} from "./fromConfig";
 
-export { StoreFS, StoreRedis, StoreMongo, getStoreFromEnv as FromEnv}
+export { StoreFS, StoreRedis, StoreMongo, getStoreFromConfig as FromConfig}
 export type PersistormInstance = StoreFS | StoreRedis | StoreMongo
 
+//todo: sqlite
 //todo: memory
 //todo: rest | socket | websocket with builtin server implementation
-//support for '..' col calls
+//todo: support for '..' col calls
