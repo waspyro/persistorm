@@ -50,7 +50,8 @@ export const getStoreFromConfig = (config: StoreConfig = {}): PersistormInstance
     case 'mongo': {
       const url = config.mongo?.url || fromEnv(...envKeys.mongo.url)
       const colName = config.mongo?.col || fromEnv(...envKeys.mongo.col)
-      const route = (config.mongo?.route || fromEnv(...envKeys.mongo.route)).split(',')
+      const route = (config.mongo?.route || fromEnv(...envKeys.mongo.route))
+        .split(',').filter(Boolean)
       const client = new MongoClient(url)
       const collection = client.db().collection(colName)
       return new StoreMongo(client, collection, route)

@@ -109,8 +109,8 @@ export default class StoreMongo {
 
     getset: typeof commonGetSet = commonGetSet.bind(this)
 
-    itk() {}
-    itkv() {}
+    // itk() {}
+    // itkv() {}
 
 }
 
