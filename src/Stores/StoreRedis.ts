@@ -14,7 +14,7 @@ export default class StoreRedis {
         private decode = JSON.parse
     ) {
         if(!sep.length) throw new Error('sep cannot be empty string')
-        this.path = route.filter(el => el).join(sep)
+        this.path = route.join(sep)
         this.arrayDecoder = ArrayDecoder(this.decode)
         this.objectDecoder = ObjectDecoder(this.decode)
     }

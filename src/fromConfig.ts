@@ -15,11 +15,14 @@ export const envPrefix = process.env.PERSISTORM_PREFIX || ''
 // todo: allow lower
 // todo: allow ditching provider prefix
 // todo: encoding env (may just be simple pass for cryptowrap or location) if i decide to continue using it.
+// todo: redis empty route, and split
+// todo: fs route
 export const envKeys = {
   provider: [[envPrefix+'PROVIDER'], ''],
   mongo: {
     url: [[envPrefix+'MONGO_URL'], 'mongodb://localhost:27017/persistorm'],
-    col: [[envPrefix+'MONGO_COL'], 'default']
+    col: [[envPrefix+'MONGO_COL'], 'default'],
+    route: [[envPrefix+'MONGO_ROUTE'], '']
   },
   redis: {
     url: [[envPrefix+'REDIS_URL'], 'redis://localhost:6379/0'],
@@ -38,16 +41,19 @@ type ObjectValuesAsString <T> = {
       ? ObjectValuesAsString<T[K]> : string;
 }
 
-export const getStoreFromConfig = (config: ObjectValuesAsString<typeof envKeys> = {}): PersistormInstance | null => {
+export type StoreConfig = ObjectValuesAsString<typeof envKeys>
+
+export const getStoreFromConfig = (config: StoreConfig = {}): PersistormInstance | null => {
   const provider = config.provider || fromEnv(...envKeys.provider)
 
   switch (provider) {
     case 'mongo': {
       const url = config.mongo?.url || fromEnv(...envKeys.mongo.url)
       const colName = config.mongo?.col || fromEnv(...envKeys.mongo.col)
+      const route = (config.mongo?.route || fromEnv(...envKeys.mongo.route)).split(',')
       const client = new MongoClient(url)
       const collection = client.db().collection(colName)
-      return new StoreMongo(client, collection)
+      return new StoreMongo(client, collection, route)
     }
     case 'fs': {
       const root = config.fs?.root || fromEnv(...envKeys.fs.root)
