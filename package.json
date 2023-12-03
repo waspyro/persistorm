@@ -5,10 +5,11 @@
   ],
   "types": "dist/index.d.ts",
   "name": "persistorm",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
+    "prepare": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
