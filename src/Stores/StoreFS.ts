@@ -117,6 +117,8 @@ export default class StoreFS {
 
     getset: typeof commonGetSet = commonGetSet.bind(this)
 
+    end = async () => 1
+
     static home = os.homedir()
     static tmp = Path.join(os.tmpdir(), 'persistorm')
     static xdgcache = Path.join(StoreFS.home, 'cache', 'persistorm')

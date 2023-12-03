@@ -109,6 +109,10 @@ export default class StoreMongo {
 
     getset: typeof commonGetSet = commonGetSet.bind(this)
 
+    end() {
+        return this.client.close().then(() => 1)
+    }
+
     // itk() {}
     // itkv() {}
 

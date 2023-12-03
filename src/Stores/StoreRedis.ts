@@ -54,4 +54,10 @@ export default class StoreRedis {
 
     getset: typeof commonGetSet = commonGetSet.bind(this)
 
+    async end() {
+        setImmediate(() => this.client.disconnect())
+        await new Promise(r => this.client.on('end', r))
+        return 1
+    }
+
 }
